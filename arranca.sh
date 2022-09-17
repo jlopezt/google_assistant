@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /home/pi/desarrollo/python/flask/google-assistant-smart-home
+cd /home/pi/desarrollo/python/flask/google_assistant
 
 export AUTHLIB_INSECURE_TRANSPORT=1
 
