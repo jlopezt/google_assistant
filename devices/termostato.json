@@ -1,0 +1,37 @@
+{
+    "type": "action.devices.types.THERMOSTAT",
+    "traits": [
+      "action.devices.traits.TemperatureSetting"
+    ],
+    "name": {
+      "name": "termostato",
+      "defaultNames": [
+        "termostato",
+        "calefaccion"
+      ],
+      "nicknames": [
+        "termostato",
+        "calefaccion"
+      ]
+    },
+    "attributes": {
+      "availableThermostatModes": [
+        "heat",
+        "on",
+        "off"
+      ],
+      "thermostatTemperatureRange": {
+        "minThresholdCelsius": 10,
+        "maxThresholdCelsius": 40
+      },
+      "thermostatTemperatureUnit": "C"
+    },             
+    "willReportState": true,
+    "roomHint": "Cocina",
+    "deviceInfo": {
+      "manufacturer": "Domoticae, Inc",
+      "model": "1",
+      "hwVersion": "1",
+      "swVersion": "1"
+    }
+}

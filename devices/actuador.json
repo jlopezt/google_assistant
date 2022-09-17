@@ -1,0 +1,25 @@
+{
+    "type": "action.devices.types.SWITCH",
+    "traits": [
+        "action.devices.traits.OnOff"
+    ],
+    "name": {
+        "name": "actuador",
+        "defaultNames": [
+          "actuador",
+          "automata"
+        ],
+        "nicknames": [
+          "actuador",
+          "automata"
+        ]
+    },
+    "willReportState": false,
+    "roomHint": "Despacho",
+    "deviceInfo": {
+        "manufacturer": "Domoticae",
+        "model": "1",
+        "hwVersion": "1",
+        "swVersion": "1"
+    }
+}
