@@ -3,18 +3,40 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1" />
 <title>Google Smart Home</title>        
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="/statics/css.css" media="screen" />
+<link rel='stylesheet' type='text/css' href='/statics/main.css'>
 </head>
 <body>
 <form method="POST">
 {% if login_failed %}
     <div class="error">Invalid username or password</div><br/>
 {% endif %}
-    Username:<br/>
-    <input type="text" name="username" size="20" /><br/>
-    Password:<br/>
-    <input type="password" name="password" size="20" /><br/><br/>
-    <input type="submit" name="login" value="Validar">
+    <div class="izquierda" style="font-size: 20px;">
+        Introduzca su usuario y contraseña de 
+        <span>DOMOTI</span><span style="color:red">C</span><span>AE</span><span style="font-size: 35px;"></span>
+        <br>
+        <br>
+        <table style="border: 0px solid #ddd;">
+        <tr>
+            <td style="border: 0px;">Usuario:</td>
+            <td style="border: 0px;"><input type="text" name="username" size="20" /></td>
+        </tr>
+        <tr>
+            <td style="border: 0px;">Contraseña:</td>
+            <td style="border: 0px;"><input type="password" name="password" size="20" /></td>
+        </tr>
+        </table>
+        <br>
+        <input type="submit" name="login" value="Validar">
+
+    <br><br>
+    <span style="font-size: 10px;">
+        <p><a href="http://www.marca.es" target="_blank">No recuerdo mi usuario</a></p>
+        <p><a href="http://www.marca.es" target="_blank">No recuerdo mi contraseña</a></p>   
+    </span>
+    </div>
+
 </form>
+
 </body>
 </html>

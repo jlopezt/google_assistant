@@ -90,9 +90,13 @@ def random_string(stringLength=8):
     chars = string.ascii_letters + string.digits
     return ''.join(random.choice(chars) for i in range(stringLength))
 
-@app.route('/css/<path:path>')
-def send_css(path):
-    return send_from_directory('css', path)
+@app.route('/login.html')
+def send_login():
+    return render_template('login.html')
+
+@app.route('/statics/<path:path>')
+def send_statics(path):
+    return send_from_directory('statics', path)
 
 # OAuth entry point
 @app.route('/auth', methods=['GET', 'POST'])
@@ -100,7 +104,7 @@ def auth():
     global last_code, last_code_user, last_code_time
     if request.method == 'GET':
         # Ask user for login and password
-        return render_template('login.html')
+        return render_template('main.html')
     elif request.method == 'POST':
         if ("username" not in request.form
             or "password" not in request.form
