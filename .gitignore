@@ -1,3 +1,6 @@
 *.pyc
 *.bak
 *.log
+keys/*.*
+tokens/*.*
+**/__pycache__/*.*
