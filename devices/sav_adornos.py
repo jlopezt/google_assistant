@@ -15,7 +15,13 @@ modosGoogle ={
 """
 modosGoogle = [False,True]
 
-def leerEstadoSalida():
+
+def adornos_query(custom_data):
+    logger.debug("Query en adornos:\n")
+
+    respuesta = {}
+
+    #PRegunto por las salidas
     """
     Peticion:
     http://10.68.1.60/estadoSalidas
@@ -38,10 +44,9 @@ def leerEstadoSalida():
     estado=modosGoogle[salidas[0]['estado']]
 
     logger.debug("modo: %s",estado)
-    
-    return estado
 
-def leerEstadoSecuenciador():
+
+    #pregunto por el secuenciador
     """
     Peticion:
     http://10.68.1.60/estadoSalidas
@@ -58,45 +63,17 @@ def leerEstadoSecuenciador():
     r.json()
     respuesta = r.json()
     
-    estadoSec=modosGoogle[respuesta['estado']]
-    #if (respuesta['estado']): estadoSec=True
-    #else: estadoSec=False
-    
-    return estadoSec
+    if (respuesta['estado']): estadoSec=True
+    else: estadoSec=False
 
-def generaRespuestaQuery():
-    estadoSalida=leerEstadoSalida()
-    estadoSecuenciador=leerEstadoSecuenciador()
-
-    return {
-        "status": "SUCCESS", 
-        "on": estadoSalida, 
-        "online": True,
-        "currentToggleSettings": {"secuenciador": estadoSecuenciador},
-        "currentModeSettings": {"modo": estadoSecuenciador}
-        }
-
-def generaRespuestaExecute():
-    estadoSalida=leerEstadoSalida()
-    estadoSecuenciador=leerEstadoSecuenciador()
-
-    return {
-        "status": "SUCCESS", 
-        "states":{
-            "on": estadoSalida, 
-            "online": True,
-            "currentToggleSettings": {"secuenciador": estadoSecuenciador},
-            "currentModeSettings": {"modo": estadoSecuenciador}
+    return {"status": "SUCCESS", 
+            "states": {
+                "on": estado, 
+#                "online": True,
+                "currentToggleSettings": {"secuenciador": estadoSec},
+                "currentModeSettings": {"modo": estadoSec},
             }
         }
-
-def adornos_query(custom_data):
-    logger.debug("Query en adornos:\n")
-
-    #respuesta = {}
-    respuesta= generaRespuestaQuery()
-
-    return respuesta
 
 def adornos_action(custom_data, command, params):
     logger.debug("commands: %s\nparamas: %s",command,params)
@@ -114,15 +91,13 @@ def adornos_action(custom_data, command, params):
 
                 r = requests.get(url)
                 logger.debug("respuesta del dispositivo: %s",r)
-        '''
+
         return {"status": "SUCCESS", 
                 "states": {
 #                    "online": True,
                     "on": params['on'] 
                     }
                 }
-        '''
-        return generaRespuestaExecute()
         
     elif command == "action.devices.commands.SetToggles":                    
         if 'updateToggleSettings' in params:
@@ -140,9 +115,11 @@ def adornos_action(custom_data, command, params):
                 r = requests.get(url)
                 logger.debug("respuesta del dispositivo: %s",r)
                 
-
-                return generaRespuestaExecute()
-                    
+                return {"status": "SUCCESS", 
+                        "states": {
+                            "currentToggleSettings": {"secuenciador": toggle}
+                            }    
+                        }                        
             else:
                 return {"status": "ERROR"}
         else:
@@ -155,18 +132,16 @@ def adornos_action(custom_data, command, params):
                 modo = modos["Modo"]
                 logger.debug("Valor de Modo: %s",modo)         
                
-                if modo=="Manual":
-                    url = 'http://' + device_IP + '/desactivaSecuenciador'
-                elif modo=="Automatico":
+                if(modo):
                     url = 'http://' + device_IP + '/activaSecuenciador'
+                else:
+                    url = 'http://' + device_IP + '/desactivaSecuenciador'
                 logger.debug("Cambio el modo del secuenciador: accediendo al dispositivo en %s",url)
 
                 r = requests.get(url)
                 logger.debug("respuesta del dispositivo: %s",r)
                 
-                #return {"status": "SUCCESS", "currentModeSettings": {"modo": modo}}                
-                return generaRespuestaExecute()
-            
+                return {"status": "SUCCESS", "currentModeSettings": {"modo": modo}}
             else:
                 return {"status": "ERROR"}                
         else:

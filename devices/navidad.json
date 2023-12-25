@@ -1,0 +1,18 @@
+{
+    "type": "action.devices.types.SWITCH",
+    "traits": [
+        "action.devices.traits.OnOff"
+    ],
+    "name": {
+        "name": "luz de navidad"
+    },
+    "willReportState": true,
+    "roomHint": "Jardin",
+    "deviceInfo": {
+        "manufacturer": "Domoticae",
+        "model": "1",
+        "hwVersion": "1",
+        "swVersion": "1"
+    }
+}
+

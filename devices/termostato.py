@@ -5,7 +5,7 @@ import logging
 import requests
 
 logger = logging.getLogger()
-device_IP = '10.68.0.60'
+device_IP = '10.68.1.60'
 """
 modosGoogle ={
         'on':1, #mapea con on en el dispositivo

@@ -1,6 +1,9 @@
 {
     "password": "test",
     "devices": [
-        "termostato"
+        "termostato",
+        "navidad",
+        "adornos",
+        "actuador"
     ]
 }

@@ -90,13 +90,9 @@ def random_string(stringLength=8):
     chars = string.ascii_letters + string.digits
     return ''.join(random.choice(chars) for i in range(stringLength))
 
-@app.route('/login.html')
-def send_login():
-    return render_template('login.html')
-
-@app.route('/statics/<path:path>')
-def send_statics(path):
-    return send_from_directory('statics', path)
+@app.route('/css/<path:path>')
+def send_css(path):
+    return send_from_directory('css', path)
 
 # OAuth entry point
 @app.route('/auth', methods=['GET', 'POST'])
@@ -104,7 +100,7 @@ def auth():
     global last_code, last_code_user, last_code_time
     if request.method == 'GET':
         # Ask user for login and password
-        return render_template('main.html')
+        return render_template('login.html')
     elif request.method == 'POST':
         if ("username" not in request.form
             or "password" not in request.form
@@ -112,7 +108,8 @@ def auth():
             or "response_type" not in request.args
             or request.args["response_type"] != "code"
             or "client_id" not in request.args
-            or request.args["client_id"] != config.CLIENT_ID):
+            or request.args["client_id"] != config.CLIENT_ID
+            ):
                 logger.warning("invalid auth request")#, extra={'remote_addr': request.remote_addr, 'user': request.form['username']})
                 return "Invalid request", 400
         # Check login and password

@@ -1,25 +1,77 @@
 {
     "type": "action.devices.types.SWITCH",
     "traits": [
-        "action.devices.traits.OnOff"
-    ],
+        "action.devices.traits.OnOff",
+        "action.devices.traits.Toggles",
+        "action.devices.traits.Modes"
+        ],
     "name": {
         "name": "actuador",
-        "defaultNames": [
-          "actuador",
-          "automata"
-        ],
         "nicknames": [
-          "actuador",
-          "automata"
+          "actuador32"
         ]
-    },
-    "willReportState": false,
+        },
+    "willReportState": true,
     "roomHint": "Despacho",
     "deviceInfo": {
         "manufacturer": "Domoticae",
-        "model": "1",
+        "model": "ESP32",
         "hwVersion": "1",
-        "swVersion": "1"
+        "swVersion": "7.8.0"
+        },
+    "attributes": {    
+        "availableToggles": [
+            {
+            "name": "secuenciador",
+            "name_values": [
+                {
+                "name_synonym": [
+                    "secuenciador"
+                    ],
+                "lang": "es"
+                },
+                {
+                    "name_synonym": [
+                        "sequencer"
+                        ],
+                    "lang": "en"
+                    }                
+                ]
+            }
+        ],
+        "availableModes": [{
+            "name": "Modo",
+            "name_values": [{
+                "name_synonym": ["modo", "modalidad", "funcionamiento"],
+                "lang": "es"
+            },
+            {
+                "name_synonym": ["mode", "modality", "behaviour"],
+                "lang": "en"
+            }],
+            "settings": [{
+                "setting_name": "Manual",
+                "setting_values": [
+                    {"setting_synonym": ["manual", "apagado", "off"],"lang": "es"},
+                    {"setting_synonym": ["manual", "switch-off", "off"],"lang": "en"}
+                ]
+            }, 
+            {
+                "setting_name": "Automatico",
+                "setting_values": [
+                    {"setting_synonym": ["automatico", "encendido", "on"],"lang": "es"},
+                    {"setting_synonym": ["automatic", "switch-on", "on"],"lang": "en"}
+                ]
+            }            
+            ],
+            "ordered": false
+            }
+        ],
+        "commandOnlyToggles": false,
+        "commandOnlyModes": false,
+        "commandOnlyOnOff": false,
+        "queryOnlyToggles": false,
+        "queryOnlyModes": false,
+        "queryOnlyOnOff": false
     }
 }

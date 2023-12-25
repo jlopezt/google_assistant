@@ -8,7 +8,7 @@
     "name": {
         "name": "adornos"
         },
-    "willReportState": false,
+    "willReportState": true,
     "roomHint": "Jardin",
     "deviceInfo": {
         "manufacturer": "Domoticae",
@@ -23,19 +23,23 @@
             "name_values": [
                 {
                 "name_synonym": [
-                    "secuenciador"
+                    "secuenciador",
+                    "automatico"
                     ],
                 "lang": "es"
                 },
                 {
                     "name_synonym": [
-                        "sequencer"
+                        "sequencer",
+                        "automatic"
                         ],
                     "lang": "en"
                     }                
                 ]
             }
         ],
+        "commandOnlyToggles": false,
+        "queryOnlyToggles": false,
         "availableModes": [{
             "name": "Modo",
             "name_values": [{
@@ -64,11 +68,7 @@
             "ordered": false
             }
         ],
-        "commandOnlyToggles": false,
         "commandOnlyModes": false,
-        "commandOnlyOnOff": false,
-        "queryOnlyToggles": false,
-        "queryOnlyModes": false,
-        "queryOnlyOnOff": false
+        "queryOnlyModes": false
     }
 }
