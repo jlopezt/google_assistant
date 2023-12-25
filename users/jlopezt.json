@@ -1,0 +1,29 @@
+{
+    "password": "test",
+    "devices": [
+        {
+        "name":{
+            "name" : "calefaccion"
+            },
+        "type": "termostato",
+        "roomHint": "Salon"
+        },
+        {
+        "type": "actuador",
+        "name": {
+            "name": "adornos",
+            "defaultNames": [
+                "exterior"
+                ],
+            "nicknames": [
+                "luces de navidad"
+                ]
+            },
+        "attribs":{
+            "commandOnlyOnOff": false,
+            "queryOnlyOnOff": false
+            },
+        "roomHint": "Salon"
+        }
+    ]
+}

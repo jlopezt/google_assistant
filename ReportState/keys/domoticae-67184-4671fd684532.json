@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "domoticae-67184",
+  "private_key_id": "4671fd684532f24388b2c400c36689dbbd1e320c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCqhW261aVu3e6U\nM+4japoVEbVUhMAZ06r/OIwN9bpHgkCn9jthrxUUCjQStYq8eI4cGBaurUNTyv6j\nvEYv9vDPIuDlE6ZeZEGdVrOciAzwS2vwJVxoGm03W6c4DnrigBHWWm99Phbzfa1u\nZT53AtyF8TwXwo4o2/LNeEhNh9dKLnrRE2ptnjavdbsOCSs2bFiXZHuvQ1gApBxv\nS3c3NjpQG7mRxdPMRrXkGtPwfM8Dwz1F0KYgmUbG4m+QH9D9Ntwz8SCjbrWrzKAF\nYWtHDl3rYxlwLCwIFTvZLTFhRETTvcBfSCMQNzo/DPiDi3nzNkrpAwcXjN1KclAO\ntV3HAYX9AgMBAAECggEAEdTenudJA7EzCe3tROhYoQPnS6WPJhQ/oS1DXhFYb7Jj\n+vxxhLtHj78qZ1tzHNbZe4AcXRtSu1AytSISz+C5mVuLG4FkyCGhR+gBY8jJW5Zz\nfNsXUO6UhbGwqJjBCm78jocJ+hWUVlWJ3Y26TL0wnNQXZd+rOIQZnZlqrCrcnU3X\nbX0B+Y321QsqSa9nsB+SGP4UEpbmoewVd2s3eI5XWSCExJpx7uvQLVUxfNaPasOI\nEMbNpMozSFZbw8+9emMDSSADc5yYmHR6V+Pc+VyawWv8Iasr2lzpUX8LatI2vAAW\nJ0DxnQDxu37zQspExg5GBpZQrGOm0czFFMz5p/tsYQKBgQDta4HRsddGf6gMfYdh\nGdYbY/RV3KxhvE61g+oIm+AAS9r1sEoMEO5MuhLiCIyQuElP4U2Cn61TZ+iTM6Hp\nFjI51puNU2QDecMaCIhVgDChmE33k/Hvcbm/TKuTrbX4enz7y65Z0CQLj2Y9Q265\n1GGlL80iA2cE2kPgN/ZlfQ+AIQKBgQC33ap+qsOu6zFNrCH/nvj6P/kpaWZ6EddC\niTmF2YxpuDRBXAbGa4maYfcHsR5umc+IGCLvXzJElA+WhUhk3gZ8dpfsb5hiKVSy\nlahe195ugTTYIqXt0vImN3SEY6138VbgQyKq36kkhybzXd01QIz6yPO672XCt+YV\n57i0jEi6XQKBgQCLLv9IA04E0kmeKOj4j8DpBcvzmg6krVQnLVJCAb9r7QxMBDEk\nqbhJ2ru/LuvY23B/F8Hs1dcykjPSN+6vSoffSGSgkUaMkxFBbcce+KuJ0FPE1EJ8\n8NrHvxbG2ItZQ9WJd3qaxF6dOE/jkmiTIGKuCDvluMDoI1yvUZ9tF8fCgQKBgQCQ\n/hOyObWAneXOa5yP+Ow8Y/B3kK+IOcN3q8EZ5VmOEP3cQNby5+CmRvTIMwtdipuW\npfn+rCJ25A960nYpXNDem6Loh4QyfIdXIR+aUz8MA4YJnyEcb4oXSwnuULB98mph\nBXA0MZYvwQidR/rmQJYsOgXB94FW0TB3O7lzX2EG3QKBgEhP6L3hnY3pVpW7w+aK\nS1wcLlhAgoZWsjaMdd7//HYTwTXsTZjAQ9KLd0IfJbAiCQY16wDKo5gRObwNeu/g\n4i8utOlYe+eIq/2hZogKTWAwnLeCIbadsB5nCF5ioNaFwNc3ZaHQtRoD+3Nb0gs9\nNHTmU9+SyLVy/rir39n+uQzQ\n-----END PRIVATE KEY-----\n",
+  "client_email": "domoticaegooglehome@domoticae-67184.iam.gserviceaccount.com",
+  "client_id": "102562292762783895718",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/domoticaegooglehome%40domoticae-67184.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
