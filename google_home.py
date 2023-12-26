@@ -38,19 +38,20 @@ last_code = None
 last_code_user = None
 last_code_time = None
 
+app = Flask(__name__)
+
+logger.info("Started.")#, extra={'remote_addr': '-', 'user': '-'})
+
 #config de BBDD
 try:
     db = MySQLdb.connect(config.DB_IP,config.DB_USUARIO,config.DB_PASSWORD,config.DB_NOMBRE)
     db.autocommit(True)
     cursor = db.cursor(MySQLdb.cursors.DictCursor)
-    print('OK: Conectado a la base de datos ' + config.DB_NOMBRE)
+    logger.info('OK: Conectado a la base de datos ' + config.DB_NOMBRE)
 except MySQLdb.Error as e:
-    print("No puedo conectar a la base de datos:",e)
+    #logger.warning("No puedo conectar a la base de datos:",e)
+    logger.error("No puedo conectar a la base de datos:",e)
     sys.exit(1)
-
-app = Flask(__name__)
-
-logger.info("Started.")#, extra={'remote_addr': '-', 'user': '-'})
 
 
 #---------------------------------------- Funciones -------------------------------
@@ -70,6 +71,60 @@ def get_user(username):
         return None
 """
 
+def get_device_type(username, device_name):
+    sql="select * from Dispositivos where CID='" + username + "' and SID='" + device_name +"'"
+    try:
+        cursor.execute(sql)
+    except Exception as e: 
+        print(e)  
+        print("Error en la consulta")       
+
+    #Si he encontrado el usaurio
+    if (cursor.rowcount>0): 
+        registro = cursor.fetchone()
+        return registro["DeviceType"]
+    else:
+        return None
+
+# Function to load device info
+def get_device(device_type):
+    filename = os.path.join(config.DEVICES_DIRECTORY, device_type + ".json")
+    if os.path.isfile(filename) and os.access(filename, os.R_OK):
+        with open(filename, mode='r') as f:
+            text = f.read()
+            data = json.loads(text)
+            #data['id'] = device_id
+            return data
+    else:
+        return None
+
+# Random string generator
+def random_string(stringLength=8):
+    chars = string.ascii_letters + string.digits
+    return ''.join(random.choice(chars) for i in range(stringLength))
+
+# Function to retrieve token from header
+def get_token():
+    auth = request.headers.get('Authorization')
+    parts = auth.split(' ', 2)
+    if len(parts) == 2 and parts[0].lower() == 'bearer':
+        return parts[1]
+    else:
+        logger.warning("invalid token: %s", auth)#, extra={'remote_addr': request.remote_addr, 'user': '-'})
+        return None
+
+# Function to check current token, returns username
+def check_token():
+    access_token = get_token()
+    access_token_file = os.path.join(config.TOKENS_DIRECTORY, access_token)
+    if os.path.isfile(access_token_file) and os.access(access_token_file, os.R_OK):
+        with open(access_token_file, mode='r') as f:
+            return f.read()
+    else:
+        return None
+#---------------------------------------- Fin funciones -------------------------------
+
+#---------------------------------------- Routers -------------------------------
 @app.route('/test', methods=['GET', 'POST'])
 def test():
     return jsonify('{"mensaje":"Hola"}')
@@ -77,7 +132,7 @@ def test():
 # Function to load user info
 @app.route('/usuario/<username>')##Solo para depuracion
 def get_user_db(username):
-    logger.info("A por ello...")
+    #logger.info("A por ello...")
     respuesta={"password":"","devices": []}
     
     sql="select * from Usuarios where Usuario='" + username + "'"
@@ -113,48 +168,9 @@ def get_user_db(username):
         logger.warning("user not found")#, extra={'remote_addr': request.remote_addr, 'user': username})
         return None
 
-
-# Function to retrieve token from header
-def get_token():
-    auth = request.headers.get('Authorization')
-    parts = auth.split(' ', 2)
-    if len(parts) == 2 and parts[0].lower() == 'bearer':
-        return parts[1]
-    else:
-        logger.warning("invalid token: %s", auth)#, extra={'remote_addr': request.remote_addr, 'user': '-'})
-        return None
-
-# Function to check current token, returns username
-def check_token():
-    access_token = get_token()
-    access_token_file = os.path.join(config.TOKENS_DIRECTORY, access_token)
-    if os.path.isfile(access_token_file) and os.access(access_token_file, os.R_OK):
-        with open(access_token_file, mode='r') as f:
-            return f.read()
-    else:
-        return None
-
-# Function to load device info
-def get_device(device_type):
-    filename = os.path.join(config.DEVICES_DIRECTORY, device_type + ".json")
-    if os.path.isfile(filename) and os.access(filename, os.R_OK):
-        with open(filename, mode='r') as f:
-            text = f.read()
-            data = json.loads(text)
-            #data['id'] = device_id
-            return data
-    else:
-        return None
-
-# Random string generator
-def random_string(stringLength=8):
-    chars = string.ascii_letters + string.digits
-    return ''.join(random.choice(chars) for i in range(stringLength))
-
 @app.route('/login.html')
 def send_login():
-    return render_template('login.html')      
-        
+    return render_template('login.html')
         
 @app.route('/statics/<path:path>')
 def send_statics(path):
@@ -175,11 +191,7 @@ def auth():
             or request.args["response_type"] != "code"
             or "client_id" not in request.args
             or request.args["client_id"] != config.CLIENT_ID):               
-                logger.warning("invalid auth request")#, extra={'remote_addr': request.remote_addr, 'user': request.form['username']})
-                print('request.form: ')
-                print(request.form)
-                print('request.args: ')
-                print(request.args)
+                logger.warning("invalid auth request", extra={'remote_addr': request.remote_addr, 'user': request.form['username']})
                 return "Invalid request", 400
             
         # Check login and password
@@ -214,31 +226,7 @@ def token():
 
     print("-------------------->Me piden un token por POST. cliente ID: ", config.CLIENT_ID," cliente secret: ", config.CLIENT_SECRET)
     print("-------------------->con datos: ", request.form)
-    """
-    if (1 or("client_secret" not in request.form
-        or request.form["client_secret"] != config.CLIENT_SECRET
-        or "client_id" not in request.form
-        or request.form["client_id"] != config.CLIENT_ID
-        or "code" not in request.form)):
 
-            if ("client_secret" not in request.form):
-                print("No hay secreto")
-            else: 
-                if (request.form["client_secret"] != config.CLIENT_SECRET):
-                    print("Secreto incorrecto %s", request.form["client_secret"])
-                else:
-                    if ("client_id" not in request.form):
-                        print("no hay id")
-                    else: 
-                        if (request.form["client_id"] != config.CLIENT_ID):                            
-                            print("id incirrecto %s",request.form["client_id"])
-                        else:
-                            if ("code" not in request.form):
-                                print("No hay code")
-
-            logger.warning("invalid token request")#, extra={'remote_addr': request.remote_addr, 'user': last_code_user})
-            #####return "Invalid request", 400
-    """
     # Check code
     if request.form["code"] != last_code:
         logger.warning("invalid code")#, extra={'remote_addr': request.remote_addr, 'user': last_code_user})
@@ -287,48 +275,46 @@ def fulfillment():
             # Loading each device available for this user
             for device in user['devices']:
                 # Loading device info        
-                device_id=device['name']        
+                device_name=device['name']
                 device_type=device['type']
                 device_json = get_device(device_type)
-                device_json['id'] = device_id
+                device_json['id'] = device_name
+                device_json['name']['name']=device_name
+                device_json['name']['nicknames'].append(device_name)
+                
                 #logger.debug("Dispositivo: %s\r\n",device)
                 result['payload']['devices'].append(device_json)
 
         # Query intent, need to response with current device status
         if intent == "action.devices.QUERY":
-            ###Mi codigo para leer los dispositivos del usuario y compararlos con los que vienen en la peticion
-            dev = {"devices":[]}
+            logger.debug("Intent Query")
+            
+            ###Mi codigo para leer los dispositivos del usuario y compararlos con los que vienen en la peticion                        
             user = get_user_db(user_id)
-            # Loading each device available for this user
-            for device_id in user['devices']:
-                # Loading device info                
-                #logger.debug("Dispositivo: %s\r\n",device_id)
-                dev['devices'].append(device_id)
-
-            """logger.debug("Dispositivos configurados para %s\r\n",user_id)
-            for dd in dev['devices']:
-                logger.debug("Dispositivo: %s\r\n",dd)
-            """
+            dev = dict()
+            # Loading each device available for this user            
+            for user_device in user['devices']:
+                dev.update({user_device['name']:{"type": user_device['type']}}) 
+            logger.debug("Dispositivos de %s %s\r\n", user_id, json.dumps(dev))#, extra={'remote_addr': request.remote_addr, 'user': user_id})                
             ###Fin de la lectura de dispositivos del usuario
 
             result['payload'] = {}
             result['payload']['devices'] = {}
             for device in i['payload']['devices']:
                 ###compruebo si existe el id
-                device_id = device['id']
-                if device_id in dev['devices']:
-                    #logger.debug("\n\nEsta el dispositivo %s\n\n", device_id)
-
+                device_name = device['id']
+                if device_name in dev:
+                    logger.debug("\n\nEsta el dispositivo %s\n\n", device_name)
+                    device_type=dev[device_name]['type']
                     custom_data = device.get("customData", None)
                     # Load module for this device
-                    device_module = importlib.import_module(device_id)
+                    device_module = importlib.import_module(device_type)
                     # Call query method for this device
-                    query_method = getattr(device_module, device_id + "_query")
-                    result['payload']['devices'][device_id] = query_method(custom_data)
+                    query_method = getattr(device_module, device_type + "_query")
+                    result['payload']['devices'][device_name] = query_method(user_id,device_name,custom_data)
                 ###Si no esta no lo incluyo en la respuesta
                 else:
-                    logger.debug("\n\nNo esta el dispositivo %s\n\n", device_id)
-
+                    logger.debug("\n\nNo esta el dispositivo %s\n\n", device_name)
 
         # Execute intent, need to execute some action
         if intent == "action.devices.EXECUTE":
@@ -336,21 +322,24 @@ def fulfillment():
             result['payload']['commands'] = []
             for command in i['payload']['commands']:
                 for device in command['devices']:
-                    device_id = device['id']
+                    device_name = device['id']
                     #Habria que comprobar que el dispositivo esta en la config del cleinte
                     custom_data = device.get("customData", None)
-                    logger.debug("Accion sobre device_id: %s",device_id)
+                    logger.debug("Accion sobre device_id: %s",device_name)
+                    
+                    device_type=get_device_type(user_id,device_name)
+                    
                     # Load module for this device
-                    device_module = importlib.import_module(device_id)
+                    device_module = importlib.import_module(device_type)
                     # Call execute method for this device for every execute command                    
-                    action_method = getattr(device_module, device_id + "_action")
+                    action_method = getattr(device_module, device_type + "_action")
                     logger.debug("action_method: %s",action_method)
                     for e in command['execution']:
                         command = e['command']
                         params = e.get("params", None)             
-                        action_result = action_method(custom_data, command, params)
+                        action_result = action_method(user_id,device_name,custom_data, command, params)
                         logger.debug("action_result_return: %s",json.dumps(action_result))
-                        action_result['ids'] = [device_id]
+                        action_result['ids'] = [device_name]
                         #action_result['status']=action_result_return['status']
                         #action_result['states']=action_result_return['states']
                         result['payload']['commands'].append(action_result)
@@ -366,3 +355,4 @@ def fulfillment():
 
     logger.debug("response: \r\n%s", json.dumps(result, indent=4))#, extra={'remote_addr': request.remote_addr, 'user': user_id})
     return jsonify(result)
+#---------------------------------------- Fin routers -------------------------------

@@ -5,7 +5,7 @@ import logging
 import requests
 
 logger = logging.getLogger()
-device_IP = '10.68.1.60'
+device_IP = '10.68.0.60'
 """
 modosGoogle ={
         'on':1, #mapea con on en el dispositivo
@@ -15,7 +15,7 @@ modosGoogle ={
 """
 modosGoogle = ['off','on','heat']
 
-def termostato_query(custom_data):    
+def termostato_query(user_id,device_name,custom_data):    
     """
     Peticion:
     http://10.68.1.60/estado
@@ -37,7 +37,7 @@ def termostato_query(custom_data):
     
     return {"status": "SUCCESS","states": {"online": "true","thermostatMode": modo,"thermostatTemperatureSetpoint": medidas['consigna'],"thermostatTemperatureAmbient": medidas['temperatura'],"thermostatHumidityAmbient": medidas['humedad']}}
 
-def termostato_action(custom_data, command, params):
+def termostato_action(user_id,device_name,custom_data, command, params):
     logger.debug("commands: %s\nparamas: %s",command,params)
 
     if command == "action.devices.commands.ThermostatTemperatureSetpoint":

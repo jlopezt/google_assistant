@@ -104,7 +104,7 @@ def generaRespuestaExecute():
             }
         }
 
-def actuador_query(custom_data):
+def actuador_query(user_id,device_name,custom_data):
     logger.debug("Query en adornos:\n")
 
     #respuesta = {}
@@ -112,7 +112,7 @@ def actuador_query(custom_data):
 
     return respuesta
 
-def actuador_action(custom_data, command, params):
+def actuador_action(user_id,device_name,custom_data, command, params):
     logger.debug("commands: %s\nparamas: %s",command,params)
     
     if command == "action.devices.commands.OnOff":

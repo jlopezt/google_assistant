@@ -7,9 +7,7 @@
         ],
     "name": {
         "name": "actuador",
-        "nicknames": [
-          "actuador32"
-        ]
+        "nicknames": []
         },
     "willReportState": true,
     "roomHint": "Despacho",

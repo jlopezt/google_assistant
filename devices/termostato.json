@@ -9,10 +9,7 @@
         "termostato",
         "calefaccion"
       ],
-      "nicknames": [
-        "termostato",
-        "calefaccion"
-      ]
+      "nicknames": []
     },
     "attributes": {
       "availableThermostatModes": [
