@@ -1,6 +1,8 @@
 *.pyc
 *.bak
 *.log
-keys/*.*
-tokens/*.*
-**/__pycache__/*.*
+log/*
+keys/*
+tokens/*
+users/*
+**/__pycache__

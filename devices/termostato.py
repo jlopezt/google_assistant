@@ -64,5 +64,5 @@ def termostato_action(user_id,device_name,custom_data, command, params):
         r = requests.get(url)
         logger.debug("respuesta: %s",r)
         
-    return termostato_query(custom_data)
+    return termostato_query(user_id,device_name,custom_data)
     #return {"status": "SUCCESS","online": "true","thermostatMode": "cool","thermostatTemperatureSetpoint": 23,"thermostatTemperatureAmbient": 25.1,"thermostatHumidityAmbient": 45.3}

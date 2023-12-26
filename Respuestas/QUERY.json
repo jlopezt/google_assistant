@@ -1,0 +1,48 @@
+{
+    "inputs": [
+        {
+            "intent": "action.devices.QUERY",
+            "payload": {
+                "devices": [
+                    {
+                        "id": "drulizador"
+                    },
+                    {
+                        "id": "Test1"
+                    }
+                ]
+            }
+        }
+    ],
+    "requestId": "13275501855327944515"
+}
+
+
+
+{
+    "requestId": "13275501855327944515",
+    "payload": {
+        "devices": {
+            "drulizador": {
+                "status": "SUCCESS",
+                "states": {
+                    "online": "true",
+                    "thermostatMode": "heat",
+                    "thermostatTemperatureSetpoint": 22.5,
+                    "thermostatTemperatureAmbient": 23.1,
+                    "thermostatHumidityAmbient": 49.6
+                }
+            },
+            "Test1": {
+                "on": true,
+                "online": true,
+                "currentToggleSettings": {
+                    "secuenciador": true
+                },
+                "currentModeSettings": {
+                    "modo": "Automatico"
+                }
+            }
+        }
+    }
+}

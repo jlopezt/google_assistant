@@ -1,20 +1,16 @@
-2023-12-23 21:00:17 Entramos en fulfillment
-2023-12-23 21:00:17 request:
 {
     "inputs": [
         {
             "intent": "action.devices.SYNC"
         }
     ],
-    "requestId": "16040125527535089474"
+    "requestId": "11551069916844393366"
 }
-2023-12-23 21:00:17 busco fichero /home/pi/desarrollo/python/flask/google_assistant/users/pepe.json
-2023-12-23 21:00:17 abriendo fichero /home/pi/desarrollo/python/flask/google_assistant/users/pepe.json
-2023-12-23 21:00:17 response:
+
 {
-    "requestId": "16040125527535089474",
+    "requestId": "11551069916844393366",
     "payload": {
-        "agentUserId": "pepe",
+        "agentUserId": "jlopezt",
         "devices": [
             {
                 "type": "action.devices.types.THERMOSTAT",
@@ -22,14 +18,13 @@
                     "action.devices.traits.TemperatureSetting"
                 ],
                 "name": {
-                    "name": "termostato",
+                    "name": "drulizador",
                     "defaultNames": [
                         "termostato",
                         "calefaccion"
                     ],
                     "nicknames": [
-                        "termostato",
-                        "calefaccion"
+                        "drulizador"
                     ]
                 },
                 "attributes": {
@@ -52,140 +47,7 @@
                     "hwVersion": "1",
                     "swVersion": "1"
                 },
-                "id": "termostato"
-            },
-            {
-                "type": "action.devices.types.SWITCH",
-                "traits": [
-                    "action.devices.traits.OnOff"
-                ],
-                "name": {
-                    "name": "luz de navidad"
-                },
-                "willReportState": true,
-                "roomHint": "Jardin",
-                "deviceInfo": {
-                    "manufacturer": "Domoticae",
-                    "model": "1",
-                    "hwVersion": "1",
-                    "swVersion": "1"
-                },
-                "id": "navidad"
-            },
-            {
-                "type": "action.devices.types.OUTLET",
-                "traits": [
-                    "action.devices.traits.OnOff",
-                    "action.devices.traits.Toggles",
-                    "action.devices.traits.Modes"
-                ],
-                "name": {
-                    "name": "adornos"
-                },
-                "willReportState": false,
-                "roomHint": "Jardin",
-                "deviceInfo": {
-                    "manufacturer": "Domoticae",
-                    "model": "1",
-                    "hwVersion": "1",
-                    "swVersion": "1"
-                },
-                "attributes": {
-                    "availableToggles": [
-                        {
-                            "name": "secuenciador",
-                            "name_values": [
-                                {
-                                    "name_synonym": [
-                                        "secuenciador"
-                                    ],
-                                    "lang": "es"
-                                },
-                                {
-                                    "name_synonym": [
-                                        "sequencer"
-                                    ],
-                                    "lang": "en"
-                                }
-                            ]
-                        }
-                    ],
-                    "availableModes": [
-                        {
-                            "name": "Modo",
-                            "name_values": [
-                                {
-                                    "name_synonym": [
-                                        "modo",
-                                        "modalidad",
-                                        "funcionamiento"
-                                    ],
-                                    "lang": "es"
-                                },
-                                {
-                                    "name_synonym": [
-                                        "mode",
-                                        "modality",
-                                        "behaviour"
-                                    ],
-                                    "lang": "en"
-                                }
-                            ],
-                            "settings": [
-                                {
-                                    "setting_name": "Manual",
-                                    "setting_values": [
-                                        {
-                                            "setting_synonym": [
-                                                "manual",
-                                                "apagado",
-                                                "off"
-                                            ],
-                                            "lang": "es"
-                                        },
-                                        {
-                                            "setting_synonym": [
-                                                "manual",
-                                                "switch-off",
-                                                "off"
-                                            ],
-                                            "lang": "en"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "setting_name": "Automatico",
-                                    "setting_values": [
-                                        {
-                                            "setting_synonym": [
-                                                "automatico",
-                                                "encendido",
-                                                "on"
-                                            ],
-                                            "lang": "es"
-                                        },
-                                        {
-                                            "setting_synonym": [
-                                                "automatic",
-                                                "switch-on",
-                                                "on"
-                                            ],
-                                            "lang": "en"
-                                        }
-                                    ]
-                                }
-                            ],
-                            "ordered": false
-                        }
-                    ],
-                    "commandOnlyToggles": false,
-                    "commandOnlyModes": false,
-                    "commandOnlyOnOff": false,
-                    "queryOnlyToggles": false,
-                    "queryOnlyModes": false,
-                    "queryOnlyOnOff": false
-                },
-                "id": "adornos"
+                "id": "drulizador"
             },
             {
                 "type": "action.devices.types.SWITCH",
@@ -195,9 +57,9 @@
                     "action.devices.traits.Modes"
                 ],
                 "name": {
-                    "name": "actuador",
+                    "name": "Test1",
                     "nicknames": [
-                        "actuador32"
+                        "Test1"
                     ]
                 },
                 "willReportState": true,
@@ -303,7 +165,7 @@
                     "queryOnlyModes": false,
                     "queryOnlyOnOff": false
                 },
-                "id": "actuador"
+                "id": "Test1"
             }
         ]
     }

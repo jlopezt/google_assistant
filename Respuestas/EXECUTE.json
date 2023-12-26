@@ -1,0 +1,115 @@
+{
+    "inputs": [
+        {
+            "context": {
+                "locale_country": "US",
+                "locale_language": "en"
+            },
+            "intent": "action.devices.EXECUTE",
+            "payload": {
+                "commands": [
+                    {
+                        "devices": [
+                            {
+                                "id": "Test1"
+                            }
+                        ],
+                        "execution": [
+                            {
+                                "command": "action.devices.commands.OnOff",
+                                "params": {
+                                    "on": true
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    ],
+    "requestId": "4526462810313584301"
+}
+
+{
+    "requestId": "4526462810313584301",
+    "payload": {
+        "commands": [
+            {
+                "status": "SUCCESS",
+                "states": {
+                    "on": true,
+                    "online": true,
+                    "currentToggleSettings": {
+                        "secuenciador": true
+                    },
+                    "currentModeSettings": {
+                        "modo": "Automatico"
+                    }
+                },
+                "ids": [
+                    "Test1"
+                ]
+            }
+        ]
+    }
+}
+
+-----------------------------------------------------------------------------------------------------------------
+
+{
+    "inputs": [
+        {
+            "context": {
+                "locale_country": "US",
+                "locale_language": "en"
+            },
+            "intent": "action.devices.EXECUTE",
+            "payload": {
+                "commands": [
+                    {
+                        "devices": [
+                            {
+                                "id": "Test1"
+                            }
+                        ],
+                        "execution": [
+                            {
+                                "command": "action.devices.commands.SetToggles",
+                                "params": {
+                                    "updateToggleSettings": {
+                                        "secuenciador": false
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    ],
+    "requestId": "7926501408363083293"
+}
+
+{
+    "requestId": "7926501408363083293",
+    "payload": {
+        "commands": [
+            {
+                "status": "SUCCESS",
+                "states": {
+                    "on": true,
+                    "online": true,
+                    "currentToggleSettings": {
+                        "secuenciador": false
+                    },
+                    "currentModeSettings": {
+                        "modo": "Manual"
+                    }
+                },
+                "ids": [
+                    "Test1"
+                ]
+            }
+        ]
+    }
+}

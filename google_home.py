@@ -19,10 +19,10 @@ import importlib
 import logging
 
 import MySQLdb
+import db
 from hashlib import md5
 
 # Enable log if need
-
 if hasattr(config, 'LOG_FILE'):
     logging.basicConfig(level=config.LOG_LEVEL,
                     format=config.LOG_FORMAT,
@@ -41,7 +41,17 @@ last_code_time = None
 app = Flask(__name__)
 
 logger.info("Started.")#, extra={'remote_addr': '-', 'user': '-'})
+"""
+cursor=db.connectDB()
 
+if cursor!= None:
+    logger.info('OK: Conectado a la base de datos ' + config.DB_NOMBRE)
+else:
+    logger.error("No puedo conectar a la base de datos:",e)
+    sys.exit(1)
+"""
+#---------------------------------------- Funciones -------------------------------  
+"""
 #config de BBDD
 try:
     db = MySQLdb.connect(config.DB_IP,config.DB_USUARIO,config.DB_PASSWORD,config.DB_NOMBRE)
@@ -52,12 +62,11 @@ except MySQLdb.Error as e:
     #logger.warning("No puedo conectar a la base de datos:",e)
     logger.error("No puedo conectar a la base de datos:",e)
     sys.exit(1)
-
-
-#---------------------------------------- Funciones -------------------------------
-# Function to load user info
 """
-def get_user(username):
+
+"""
+# Function to load user info
+# def get_user(username):
     filename = os.path.join(config.USERS_DIRECTORY, username + ".json")
     logger.info("busco fichero %s", filename)#, extra={'remote_addr': '-', 'user': '-'})
     if os.path.isfile(filename) and os.access(filename, os.R_OK):
@@ -70,7 +79,7 @@ def get_user(username):
         logger.warning("user not found")#, extra={'remote_addr': request.remote_addr, 'user': username})
         return None
 """
-
+"""
 def get_device_type(username, device_name):
     sql="select * from Dispositivos where CID='" + username + "' and SID='" + device_name +"'"
     try:
@@ -85,6 +94,7 @@ def get_device_type(username, device_name):
         return registro["DeviceType"]
     else:
         return None
+"""
 
 # Function to load device info
 def get_device(device_type):
@@ -131,34 +141,36 @@ def test():
         
 # Function to load user info
 @app.route('/usuario/<username>')##Solo para depuracion
-def get_user_db(username):
+def get_user(username):
+    return db.get_user_db(username)
+    """
     #logger.info("A por ello...")
     respuesta={"password":"","devices": []}
     
     sql="select * from Usuarios where Usuario='" + username + "'"
     try:
-        cursor.execute(sql)
+        db.cursor.execute(sql)
     except Exception as e: 
         print(e)  
         print("Error en la consulta")       
 
     #Si he encontrado el usaurio
-    if (cursor.rowcount>0): 
-        registro = cursor.fetchone()
+    if (db.cursor.rowcount>0): 
+        registro = db.cursor.fetchone()
         #print(registro["Nombre"],registro["Apellidos"],registro["Correo"],registro["Telefono"],registro["Direccion_ppal"],username)
 
         respuesta["password"]=registro["Password"]
 
         sql="select * from Dispositivos where CID='" + username + "'"
         try:
-            cursor.execute(sql)
+            db.cursor.execute(sql)
         except Exception as e: 
             print(e)  
             print("Error en la consulta")       
 
         #Si he encontrado dispositivos
-        for i in range(cursor.rowcount): 
-            registro = cursor.fetchone()
+        for i in range(db.cursor.rowcount): 
+            registro = db.cursor.fetchone()
             #respuesta["devices"].append(registro["SID"])
             respuesta["devices"].append({"name": registro["SID"], "type": registro["DeviceType"]})
 
@@ -167,7 +179,8 @@ def get_user_db(username):
     else:
         logger.warning("user not found")#, extra={'remote_addr': request.remote_addr, 'user': username})
         return None
-
+    """
+    
 @app.route('/login.html')
 def send_login():
     return render_template('login.html')
@@ -195,7 +208,7 @@ def auth():
                 return "Invalid request", 400
             
         # Check login and password
-        user = get_user_db(request.form["username"])
+        user = db.get_user_db(request.form["username"])
         password_txt = str(request.form["password"])
         password = md5(password_txt.encode("utf-8")).hexdigest()
         """
@@ -271,7 +284,7 @@ def fulfillment():
         if intent == "action.devices.SYNC":
             result['payload'] = {"agentUserId": user_id, "devices": []}
             # Loading user info
-            user = get_user_db(user_id)
+            user = db.get_user_db(user_id)
             # Loading each device available for this user
             for device in user['devices']:
                 # Loading device info        
@@ -290,7 +303,7 @@ def fulfillment():
             logger.debug("Intent Query")
             
             ###Mi codigo para leer los dispositivos del usuario y compararlos con los que vienen en la peticion                        
-            user = get_user_db(user_id)
+            user = db.get_user_db(user_id)
             dev = dict()
             # Loading each device available for this user            
             for user_device in user['devices']:
@@ -327,7 +340,7 @@ def fulfillment():
                     custom_data = device.get("customData", None)
                     logger.debug("Accion sobre device_id: %s",device_name)
                     
-                    device_type=get_device_type(user_id,device_name)
+                    device_type=db.get_device_type(user_id,device_name)
                     
                     # Load module for this device
                     device_module = importlib.import_module(device_type)
